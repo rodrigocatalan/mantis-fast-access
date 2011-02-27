@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+		function goToBug(){
+			if (window.localStorage == null) {
+				alert("LocalStorage must be enabled for use this plugin.");
+				return;
+			}
+			var url = window.localStorage.mantisUrl;
+			if (!url) {
+				alert("Set url in options for use this plugin.");
+				return;
+			}
+			var id = document.getElementById('inputIdBug').value.trim();
+			chrome.tabs.create({
+				'url' : url.replace(":id", id)
+			})
+		};
+		onload = function(){
+			document.getElementById('buttonIr').onclick = function(){
+				goToBug();
+			};
+			document.onkeypress = function(e){
+				if (e.keyCode == 13) 
+					goToBug(); 
+			};
+			document.getElementById('inputIdBug').focus();
+		};
+	</script>
+	<style type="text/css" src="style.css">
+		input{
+			border: solid 1px #000000;		
+			border-radius:3px;
+		}
+		input[type='button']{
+			background-color: #8080FF;
+			color: #ffffff;
+			font-weight: bold;
+			width: 30px;
+			margin-left: 5px;
+		}
+		div.content{
+	    		position: relative;
+	    		width: 200px;
+	    		height: 25px;
+		}
+	</style>
+</head>
+<body>
+	<div class="content" id="content">
+		<input type="text" id="inputIdBug" />
+		<input type="button" id="buttonIr" value="ir" src="icon.png" />
+	</div>
+</body>
+</html>

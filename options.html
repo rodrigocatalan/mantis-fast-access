@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+		get = function(id){
+			return document.getElementById(id);
+		};
+		toggle = function(url) {
+			if (window.localStorage == null) {
+				alert('Local storage is required for changing providers');
+				return;
+			}
+			
+			window.localStorage.mantisUrl = url;
+		};
+		main = function() {
+			if (window.localStorage == null) {
+				alert("LocalStorage must be enabled for changing options.");
+			    get('textUrlMantis').disabled = true;
+			    get('buttonSalvar').disabled = true;
+			    return;
+			}
+
+			if (window.localStorage.mantisUrl) 
+				get('textUrlMantis').value = window.localStorage.mantisUrl;
+		};
+		onload = function(){
+			get('buttonSalvar').onclick = function(){
+				var url = get('textUrlMantis').value;
+				toggle(url);
+			};
+			main();
+		};
+	</script>
+	<style type="text/css" src="style.css">
+		input, fieldset{
+			border: solid 1px #000000;		
+		}
+		input[type='button']{
+			background-color: #8080FF;
+			color: #ffffff;
+			font-weight: bold;
+			margin-left: 5px;
+		}
+		fieldset{
+			border-radius:10px;
+		}
+		label>span{
+			font-style: italic;
+			font-size:x-small;
+			color:#877a8e;
+		}
+	</style>
+</head>
+<body>
+	<fieldset>
+		<legend>Options</legend>
+		<label for="textUrlMantis">Url <span>(http://&lt;server&gt;[:&lt;port&gt;]/mantis/view.php?id=:id)</span></label>
+		<input id="textUrlMantis" type="url" />
+		<input id="buttonSalvar" type="button" value="Salvar"/>
+	</fieldset>
+</body>
+</html>
